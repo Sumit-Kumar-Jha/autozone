@@ -1,0 +1,38 @@
+service1:
+  replicaCount: 2
+  image:
+    repository: somusumit/service1
+    tag: latest
+  containerPort: 3000
+  livenessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  startupProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  servicePort: 80
+  ingressPath: service1
+
+service2:
+  replicaCount: 2
+  image:
+    repository: somusumit/service2
+    tag: latest
+  containerPort: 3000
+  livenessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  startupProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  servicePort: 80
+  ingressPath: service2
+
+ingress:
+  host: minikube-example.com

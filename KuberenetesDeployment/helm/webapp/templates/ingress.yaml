@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /{{ .Values.service1.ingressPath }}
+            pathType: Prefix
+            backend:
+              service:
+                name: service1-service
+                port:
+                  number: 80
+          - path: /{{ .Values.service2.ingressPath }}
+            pathType: Prefix
+            backend:
+              service:
+                name: service2-service
+                port:
+                  number: 80

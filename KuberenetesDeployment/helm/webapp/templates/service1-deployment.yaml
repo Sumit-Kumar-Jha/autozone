@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service1-deployment
+spec:
+  replicas: {{ .Values.service1.replicaCount }}
+  selector:
+    matchLabels:
+      app: service1
+  template:
+    metadata:
+      labels:
+        app: service1
+    spec:
+      containers:
+        - name: service1
+          image: {{ .Values.service1.image.repository }}:{{ .Values.service1.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service1.containerPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service1.containerPort }}
+            initialDelaySeconds: {{ .Values.service1.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service1.livenessProbe.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service1.containerPort }}
+            initialDelaySeconds: {{ .Values.service1.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service1.readinessProbe.periodSeconds }}
+          startupProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service1.containerPort }}
+            initialDelaySeconds: {{ .Values.service1.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service1.startupProbe.periodSeconds }}
